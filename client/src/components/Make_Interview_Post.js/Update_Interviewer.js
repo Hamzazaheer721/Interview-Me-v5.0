@@ -1,47 +1,28 @@
+import './Get_Interview_Posts.css'
 import React, { useState, useEffect } from 'react';
+import {useParams, useHistory} from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { useForm } from "react-hook-form"
+import axios from 'axios';
+const moment = require('moment');
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-const moment = require('moment');
-import {useParams, useHistory} from 'react-router-dom'
-
 import CreateIcon from '@material-ui/icons/Create';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import './Get_Interview_Posts.css'
-
-import { useForm, Controller } from "react-hook-form"
-import { showErrorMessage, showSuccessMessage } from '../utils/notification/Notification';
-import { isEmail, isEmpty, validateAge, validateCeoName, validateCompanyName, validateInstitute, validatePhoneNumber, validateSalary, validateTitle, validateWorkHours } from '../utils/validation/Validation';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-
-import Loader from "react-loader-spinner";
-
-import Chip from '@material-ui/core/Chip';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import DateFnsUtils from '@date-io/date-fns';
-
-import MomentUtils from '@date-io/moment';
-import WorkOutlinedIcon from '@material-ui/icons/WorkOutlined';
-import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
-
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import { showErrorMessage, showSuccessMessage } from '../utils/notification/Notification';
+import { isEmail, isEmpty, validateAge, validateCeoName, validateCompanyName, validateInstitute, validatePhoneNumber, validateSalary, validateTitle, validateWorkHours } from '../utils/validation/Validation';
 
 function Copyright() {
   return (

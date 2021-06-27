@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {useParams, useHistory} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 import { makeStyles } from '@material-ui/core/styles';
 import BookOutlinedIcon from '@material-ui/icons/BookOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
@@ -32,9 +33,8 @@ function getModalStyle() {
     };
 }
 
-
+toast.configure();
 function Interview_Post_Page({user}) {
-
     const {register, handleSubmit} = useForm();
     const candidate_user_Id = user._id;
     const {id} = useParams();
@@ -50,6 +50,15 @@ function Interview_Post_Page({user}) {
     const [post, setPost] = useState([])
     const check = value.length > 9;
     const[interviewer_user_Id, setInterviewerUserId] = useState('') 
+
+
+    const handleApply = async () =>{
+        await axios.post("/user/appliedBy-via-PostID",{userID : candidate_user_Id ,postID: id}).then((res)=>{
+            toast.info(res.data.msg, {postion: toast.POSITION.TOP_RIGHT, autoClose: 5000})
+        }).catch((err) => {
+            toast.error(err.response.data.msg, {postion: toast.POSITION.TOP_RIGHT, autoClose: 5000})
+        });
+    }
 
     const callApi = async ()=>{     
         setLoading(true);
@@ -173,6 +182,7 @@ function Interview_Post_Page({user}) {
                                 <p>{interviewer?.education?.institute_name}</p>
                                 {/* <button className = "contact__button"> Contact </button> */}
                                 <button className = "email__button" onClick={handleClickOpen}> Contact </button>
+                                <button className = "email__button" onClick={handleApply}> Apply </button>
                             </div>
                         
                         </div>

@@ -33,7 +33,7 @@ export default function Employees({user}) {
     const [records, setRecords] = useState([])
     const [tests, setTests] = useState([]);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
-
+   
     const [loading, setLoading] = useState(false);
     const options = {
         headers: {
@@ -44,6 +44,7 @@ export default function Employees({user}) {
     useEffect(() => {
         console.log("Employees")
         setLoading(true)
+        let topics;
         axios
           .post("/user/gettest", {email: user?.email}, options)
           .then((res) => {

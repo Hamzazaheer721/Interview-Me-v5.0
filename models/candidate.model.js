@@ -19,7 +19,6 @@ const CandidateSchema = new mongoose.Schema({
     },
 
     
-    
     career_level: {
         type : String,
         default: "" 

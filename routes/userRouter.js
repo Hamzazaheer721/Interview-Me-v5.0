@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { get_applied_candidates_by_postId } = require('../controllers/userCtrl')
 const userCtrl = require('../controllers/userCtrl')
 const auth = require('../middleware/auth')
 const authAdmin = require('../middleware/authAdmin')
@@ -62,6 +63,8 @@ router.get('/get-all-users-posts',userCtrl.getallusersposts)
 router.post('/get-all-posts',userCtrl.getallposts)
 router.delete('/delete-post/:id', userCtrl.deletepost)
 router.patch('/edit-post', userCtrl.updatepost)
+router.post('/appliedBy-via-PostID',userCtrl.appliedByPostID)
+router.post('/get-applied-candidates-by-postId',userCtrl.get_applied_candidates_by_postId)
 
 //company
 router.patch('/update-company-by-companyId',  userCtrl.updatecompany_via_company_id)

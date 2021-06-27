@@ -82,6 +82,7 @@ import Update_Interviewer_Schedule_Meeting from './components/Meetings/Update_In
 import Candidate_Schedule_Meeting_Table from './components/Meetings/Candidate_Schedule_Meeting_Table';
 import ChartComponent from './components/Chart';
 import Report_Page from './components/Make_Interview_Post.js/Report_Page';
+import Applied_Candidates_Table from './components/Applied_Candidates_Table';
 // const loading = (
 //   <Loader type="TailSpin" color="#00BFFF" height={40} width={40}/>
 // )
@@ -291,6 +292,7 @@ function App() {
                 <PrivateRoute path="/posts/gcp" component={isAdmin ? Posts_Table : NotFound}  user = {auth?.user} isAdmin = {auth?.isAdmin} isLogged = {auth?.isLogged} />
                 <PrivateRoute path="/posts/edit-job-posts/:id" component={isAdmin ? Edit_Interview_Posts : NotFound}  user = {auth?.user} isAdmin = {auth?.isAdmin} isLogged = {auth?.isLogged} />
                 <PrivateRoute path="/posts/update-job-posts" component={isAdmin ? EnhancedTable2 : NotFound}  user = {auth?.user} isAdmin = {auth?.isAdmin} isLogged = {auth?.isLogged} />
+                <PrivateRoute path="/posts/see-applied-candidates/:id" component={isAdmin ? Applied_Candidates_Table : NotFound}  user = {auth?.user} isAdmin = {auth?.isAdmin} isLogged = {auth?.isLogged} />
 
                 <PrivateRoute path="/posts/open-job-post-page/:id" component={isLogged ? Interview_Post_Page : NotFound}  user = {auth?.user} isAdmin = {auth?.isAdmin} isLogged = {auth?.isLogged} />
                 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const postSchema = new mongoose.Schema({
     postedBy: { type: mongoose.Schema.ObjectId, ref: 'Interviewer' },
+    appliedBy: [{ type: mongoose.Schema.ObjectId, ref: 'Candidate' }],
     title: {
         type : String,
         default: "" 

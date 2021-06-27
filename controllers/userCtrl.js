@@ -2120,12 +2120,89 @@ const userCtrl = {
             }
             console.log(scores);
             console.log(shortListedCandidates);
-            /
+            
             res.send(candidates)
         } catch (err) {
             return res.status(400).send();
         }
     },
+    get_applied_candidates_by_postId: async(req, res) =>{
+        try {
+            console.log("get-applied-candidates-by-postId")
+            console.log("postId : ",req.body)
+            let post = await Post.findOne({_id: mongoose.Types.ObjectId(req.body.postId)}).populate('postedBy appliedBy').exec();
+             if(!post) return res.status(400).json({msg : "Post has not been found"})    
+            let candidatesArray = post.appliedBy;
+            let arrayToSend = []
+            if (candidatesArray.length > 0){
+                for(i = 0 ; i < candidatesArray.length; i++){
+                    console.log("for loop")
+                    let user = await Users.findOne({_id : mongoose.Types.ObjectId(post.appliedBy[i].user)})
+                    if(!user) {
+                        continue;
+                    }
+                    else{
+                        let newObject = {
+                            name : user.name,
+                            phone_number:  post.appliedBy[i].phone_number,
+                            experience: post.appliedBy[i].experience,
+                            qualification : post.appliedBy[i].education.qualification,
+                            career_level : post.appliedBy[i].career_level 
+                        }
+                        arrayToSend.push(newObject)
+                    }
+                }
+            }
+            res.send(arrayToSend);
+        } catch (error) {
+            res.status(400).json("error : " + error); 
+        }
+    },
+
+    appliedByPostID: async (req, res) => {
+        try {
+            console.log("appliedByPostID")
+            const {userID, postID} = req.body
+            const candidate = await Candidate.findOne({user: mongoose.Types.ObjectId(userID)}).populate('user projects')
+            if (!candidate) {
+              return res.status(400).json({msg : "Candidate not found"})  
+            }
+            let post = await Post.findOne({_id : mongoose.Types.ObjectId(postID)}).populate('appliedBy')
+            if (!post) {
+              return res.status(400).json({msg : "Post not found"})  
+            }
+            let boolVal = false;
+            let appliedByList = post.appliedBy
+            for (let index = 0; index < appliedByList.length; index++) {
+                console.log("reached for loop")
+                const element = appliedByList[index];
+                //console.log(element)
+              console.log("Element ID: ", element._id)
+              console.log("Candidate ID: ", candidate._id)
+ 
+                if (element._id.toString() === candidate._id.toString()) {
+                    console.log("reached if inside for")
+                    boolVal = true;
+                    break;
+                }
+            }
+            if (boolVal === false) {
+              post = await Post.findOneAndUpdate({_id : mongoose.Types.ObjectId(postID)}, {
+                  $push: {
+                    appliedBy: mongoose.Types.ObjectId(candidate._id)
+                  }
+              })
+              await post.save()
+              res.json({msg : "You have applied for this post."})
+            }
+            else if (boolVal === true) {
+                console.log("boolVal true")
+                res.status(500).json({msg: "You cannot apply to this post again. You have already applied for this post."})
+            }
+        }  catch (error) {
+          return res.status(500).json({msg: error.message})
+        }
+      },
 
 }
 function validatePassword(pass) {
