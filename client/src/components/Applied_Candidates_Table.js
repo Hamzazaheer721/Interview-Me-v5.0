@@ -189,7 +189,9 @@ export default function Applied_Candidates_Table({user}) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [candidates, setCandidates] = useState([])
+  const [loading, setLoading] = useState(true);
+  const token = useSelector(state => state.token) 
   const Loading = () => {
     return (  
         <Loader className= {classes.loader} type="TailSpin" color="#00BFFF" height={100} width={100}/>
@@ -237,12 +239,9 @@ export default function Applied_Candidates_Table({user}) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, tests?.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, candidates?.length - page * rowsPerPage);
+
   
-  const [tests, setTests] = useState([]);
-  const [candidates, setCandidates] = useState([])
-  const [loading, setLoading] = useState(true);
-  const token = useSelector(state => state.token) 
   const options = {
     headers: {
       "Content-Type": "application/json",
@@ -257,7 +256,7 @@ export default function Applied_Candidates_Table({user}) {
       setLoading(false)
     })
     .catch((err) => {
-      console.log(err.response.msg)
+      console.log(err)
     });
   }
 
@@ -284,7 +283,7 @@ export default function Applied_Candidates_Table({user}) {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={tests?.length}
+              rowCount={candidates?.length}
             />
             {loading && Loading }
             {loading === false &&  ( 

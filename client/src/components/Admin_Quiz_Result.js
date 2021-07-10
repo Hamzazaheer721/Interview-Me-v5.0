@@ -66,9 +66,9 @@ export default function Admin_Quiz_Result(props) {
           <br />
           <strong>No. of Ques: </strong> {location.state?.test?.amount}
           <br />
-          <strong>Time Duration: </strong> {location.state?.test?.time} <br />
+          <strong>Time Duration: </strong> {location.state?.test?.time} mins <br />
           <strong>Expiry: </strong> {expiry.getDate()}-{expiry.getMonth()}-
-          {expiry.getFullYear()}
+          {expiry.getFullYear()} 
           <br />
         </div>
         <div className={resultstyles.parent}>
