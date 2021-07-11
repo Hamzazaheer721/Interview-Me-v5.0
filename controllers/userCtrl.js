@@ -2013,7 +2013,7 @@ const userCtrl = {
             console.log("get-report-via-meetingId")
             const {meetingId} = req.body;
             console.log(req.body)
-            const doc = await Report.findOne({ meeting: mongoose.Types.ObjectId(req.body.meetingId) }).populate('meeting interviewer_user candidate_user interviewer candidate').sort("-created").exec();
+            const doc = await Report.findOne({ meeting: mongoose.Types.ObjectId(req.body.meetingId) }).populate('meeting interviewer_user candidate_user interviewer candidate quiz').sort("-created").exec();
                 if (!doc) {
                     console.log("document not found")
                     res.status(400).json({msg: false})
