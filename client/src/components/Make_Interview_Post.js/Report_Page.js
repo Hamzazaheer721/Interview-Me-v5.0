@@ -334,15 +334,11 @@ export default function Report_Page({user}) {
                                                                 <h4> <b> Selected Answer   </b>  </h4>
                                                                 <h4> {quiz?.selected_answer} </h4>
                                                             </div>
-                        
                                                     </div>
                                                 )})
-                                            }
-                                            
+                                            }                    
                                         </>
-                            
                                     )
-
                                 }
                                 { report?.quiz_incorrect_data?.length > 0 && (
                                         <>
@@ -367,11 +363,8 @@ export default function Report_Page({user}) {
                                                     </div>
                                                 )})
                                             }
-                                            
                                        </>
-                            
                                     )
-
                                 }
                             </div>
                             {/* Start of Company Section */}
@@ -436,16 +429,12 @@ export default function Report_Page({user}) {
                                 <div className="company__information__main">        
                                     <h4> <b> Emotion Score  </b>  </h4>
                                     <h4> {report?.emotions_percentage}% </h4>
-
                                     <h4> <b> Quiz Score  </b>  </h4>
                                     <h4> {report?.quiz_percentage}% </h4>
-
                                     <h4> <b> CV Score  </b>  </h4>
                                     <h4> {report?.cv_percentage}% </h4>
-
                                     <h3> <b> Overall Score  </b>  </h3>
                                     <h3> {report?.overall_score}% </h3>
-
                                     <h4> <b> System's Recommendation  </b>  </h4>
                                     <h4> {
                                         report?.overall_score > 50 ?
