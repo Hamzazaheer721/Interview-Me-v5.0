@@ -270,118 +270,153 @@ export default function Report_Page({user}) {
 
                             </div> {/* closing div of list section */} 
 
-
-                             
-                           
+                                        
 
 
-                                <div className="company__section">
-
-                                    <div className="company__section__titlebar">
-                                        <div className="company__heading__section">
+                            {{/* Start of Quiz Section */}}
+                            { report?.quiz_correct_data?.length > 0 && (
+                                    <div className="company__section">
+                                        <div className="heading__section">
                                             <PermIdentityOutlinedIcon />
-                                            <h2 className= "company__heading_section_text"> Report Information </h2>
+                                            <h2 className= "user__section__heading"> Quiz Result Section </h2>
                                         </div>
+                                    
+                                        {       
+                                            report?.quiz_correct_data?.map((quiz,index) =>{
+                                                return(
+                                                    <div className="company__list__section">
 
+                                                        <div className="company__list__heading__section__for__profile__page">
+                                                            <h3 className= "user__section__heading"> <b> Question : {index + 1} </b></h3>
+                                                        </div>
 
-                                    </div>
-                                                
-
-                                    <div className="user__information__main">
-                                        <div className="user__information__left">
-                                            
-        
-                                            <div className="user__information__left__section">
-                                                <h4> <b> Interviewer   </b>  </h4>
-                                                <h4> {report?.interviewer_user?.name}</h4>
-                                            </div>
-        
-                                            <div className="user__information__left__section">
-                                                <h4> <b> Interviewer Email   </b>  </h4>
-                                                <h4> {report?.interviewer_user?.email}</h4>
-                                            </div>
-                                            <div className="user__information__left__section">
-                                                <h4> <b> Meeting Date   </b>  </h4>
-                                                <h4> {moment(report?.meeting?.createdAt, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}</h4>
-                                            </div>
-                                            <div className="user__information__left__section">
-                                                <h4> <b> Cand. Qualification   </b>  </h4>
-                                                <h4> {report?.candidate?.education?.qualification}</h4>
-                                            </div>
-                                            <div className="user__information__left__section">
-                                                <h4> <b> Cand. desired salary   </b>  </h4>
-                                                <h4> {report?.candidate?.expected_salary}$</h4>
-                                            </div>
-
+                                                        <div className="company__information__main">        
+                                                            <h4> <b> Question   </b>  </h4>
+                                                            <h4> {quiz?.question} </h4>
+                                                            <h4> <b> Correct Answer   </b>  </h4>
+                                                            <h4> {quiz?.correct_answer} </h4>
+                                                            <h4> <b> Selected Answer   </b>  </h4>
+                                                            <h4> {quiz?.selected_answer} </h4>
+                                                        </div>
                     
-                                        </div>
+                                                </div>
+                                            )})
+                                        }
+                                        
+                                    </div> 
+                           
+                                )
 
-                                        <div className="user__information__right">
-                                            <div className="user__information__right__section">
-                                                <h4> <b> candidate   </b>  </h4>
-                                                <h4> {report?.candidate_user?.name}</h4>
-                                            </div>
-            
-                                            <div className="user__information__right__section">
-                                                <h4> <b> Candidate Email   </b>  </h4>
-                                                <h4> {report?.candidate_user?.email}</h4>                               
-                                            </div>
-            
-                                            <div className="user__information__right__section">
-                                                <h4> <b> Quiz Pin   </b>  </h4>
-                                                <h4> {report?.meeting?.pin} </h4>                                                        
-                                            </div>
-                                            <div className="user__information__right__section">
-                                                <h4> <b> Cand. Career Level   </b>  </h4>
-                                                <h4> {report?.candidate?.career_level} </h4>                                                        
-                                            </div>
-                                    
-                                            <div className="user__information__right__section">
-                                                <h4> <b> Cand. Previous Job Salary   </b>  </h4>
-                                                <h4> {report?.candidate?.job_preference?.previous_jobs_salary}$ </h4>                                                        
-                                            </div>
-                                            
-                                            </div>
-                                        </div>   
-                                    
-                                    
-                                    <div className="company__information__main">        
-                                        <h4> <b> Emotion Score  </b>  </h4>
-                                        <h4> {report?.emotions_percentage}% </h4>
+                            }
 
-                                        <h4> <b> Quiz Score  </b>  </h4>
-                                        <h4> {report?.quiz_percentage}% </h4>
+                            {{/* Start of Company Section */}}
+                            <div className="company__section">
 
-                                        <h4> <b> CV Score  </b>  </h4>
-                                        <h4> {report?.cv_percentage}% </h4>
-
-                                        <h3> <b> Overall Score  </b>  </h3>
-                                        <h3> {report?.overall_score}% </h3>
-
-                                        <h4> <b> System's Recommendation  </b>  </h4>
-                                        <h4> {
-                                            report?.overall_score > 50 ?
-                                            (
-                                                'Passed since score is greater than 50%'
-                                            ):(
-                                                "Candidate's score is too low to be hired."
-                                            )
-                                        } </h4>
-
-                                        {user?.role == 0 && (
-                                            <>
-                                                <h4> <b> Interviewer's Hiring Decision  </b>  </h4>
-                                                {report?.hired === "" && <h4> Decision Pending </h4>}
-                                                {report?.hired === "hire" && <h4> Congrtaulations! You're Hired by Interviewer </h4>}
-                                                {report?.hired === "reject" && <h4> Unfortunately, You've been rejected by Interviewer </h4>}
-                                                <h4> <b> Interviewer's Interviewer's Comments  </b>  </h4>
-                                                {report?.comments === "" && <h4> N/A </h4>}
-                                                {report?.comments !== "" && <h4> {report?.comments} </h4>}
-                                            </>
-                                        )}
+                                <div className="company__section__titlebar">
+                                    <div className="company__heading__section">
+                                        <PermIdentityOutlinedIcon />
+                                        <h2 className= "company__heading_section_text"> Report Information </h2>
                                     </div>
+
 
                                 </div>
+                                            
+
+                                <div className="user__information__main">
+                                    <div className="user__information__left">
+                                        
+    
+                                        <div className="user__information__left__section">
+                                            <h4> <b> Interviewer   </b>  </h4>
+                                            <h4> {report?.interviewer_user?.name}</h4>
+                                        </div>
+    
+                                        <div className="user__information__left__section">
+                                            <h4> <b> Interviewer Email   </b>  </h4>
+                                            <h4> {report?.interviewer_user?.email}</h4>
+                                        </div>
+                                        <div className="user__information__left__section">
+                                            <h4> <b> Meeting Date   </b>  </h4>
+                                            <h4> {moment(report?.meeting?.createdAt, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}</h4>
+                                        </div>
+                                        <div className="user__information__left__section">
+                                            <h4> <b> Cand. Qualification   </b>  </h4>
+                                            <h4> {report?.candidate?.education?.qualification}</h4>
+                                        </div>
+                                        <div className="user__information__left__section">
+                                            <h4> <b> Cand. desired salary   </b>  </h4>
+                                            <h4> {report?.candidate?.expected_salary}$</h4>
+                                        </div>
+
+                
+                                    </div>
+
+                                    <div className="user__information__right">
+                                        <div className="user__information__right__section">
+                                            <h4> <b> candidate   </b>  </h4>
+                                            <h4> {report?.candidate_user?.name}</h4>
+                                        </div>
+        
+                                        <div className="user__information__right__section">
+                                            <h4> <b> Candidate Email   </b>  </h4>
+                                            <h4> {report?.candidate_user?.email}</h4>                               
+                                        </div>
+        
+                                        <div className="user__information__right__section">
+                                            <h4> <b> Quiz Pin   </b>  </h4>
+                                            <h4> {report?.meeting?.pin} </h4>                                                        
+                                        </div>
+                                        <div className="user__information__right__section">
+                                            <h4> <b> Cand. Career Level   </b>  </h4>
+                                            <h4> {report?.candidate?.career_level} </h4>                                                        
+                                        </div>
+                                
+                                        <div className="user__information__right__section">
+                                            <h4> <b> Cand. Previous Job Salary   </b>  </h4>
+                                            <h4> {report?.candidate?.job_preference?.previous_jobs_salary}$ </h4>                                                        
+                                        </div>
+                                        
+                                        </div>
+                                    </div>   
+                                
+                                
+                                <div className="company__information__main">        
+                                    <h4> <b> Emotion Score  </b>  </h4>
+                                    <h4> {report?.emotions_percentage}% </h4>
+
+                                    <h4> <b> Quiz Score  </b>  </h4>
+                                    <h4> {report?.quiz_percentage}% </h4>
+
+                                    <h4> <b> CV Score  </b>  </h4>
+                                    <h4> {report?.cv_percentage}% </h4>
+
+                                    <h3> <b> Overall Score  </b>  </h3>
+                                    <h3> {report?.overall_score}% </h3>
+
+                                    <h4> <b> System's Recommendation  </b>  </h4>
+                                    <h4> {
+                                        report?.overall_score > 50 ?
+                                        (
+                                            'Passed since score is greater than 50%'
+                                        ):(
+                                            "Candidate's score is too low to be hired."
+                                        )
+                                    } </h4>
+
+                                    {user?.role == 0 && (
+                                        <>
+                                            <h4> <b> Interviewer's Hiring Decision  </b>  </h4>
+                                            {report?.hired === "" && <h4> Decision Pending </h4>}
+                                            {report?.hired === "hire" && <h4> Congrtaulations! You're Hired by Interviewer </h4>}
+                                            {report?.hired === "reject" && <h4> Unfortunately, You've been rejected by Interviewer </h4>}
+                                            <h4> <b> Interviewer's Interviewer's Comments  </b>  </h4>
+                                            {report?.comments === "" && <h4> N/A </h4>}
+                                            {report?.comments !== "" && <h4> {report?.comments} </h4>}
+                                        </>
+                                    )}
+                                </div>
+
+                            </div>
                            
                                              
                             
