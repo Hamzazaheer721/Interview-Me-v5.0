@@ -6,6 +6,7 @@ const reportSchema = new mongoose.Schema({
     candidate: {type : mongoose.Schema.Types.ObjectId, ref: "Candidate"},
     interviewer_user: {type : mongoose.Schema.Types.ObjectId, ref: "Users"},
     candidate_user: {type : mongoose.Schema.Types.ObjectId, ref: "Users"},
+    quiz: {type : mongoose.Schema.Types.ObjectId, ref: "Test"},
     interviewer_name : {
         type: String,
         default: ""

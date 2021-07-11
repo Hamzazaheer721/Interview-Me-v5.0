@@ -1899,12 +1899,18 @@ const userCtrl = {
                 }
             let quiz_correct_data = check.correct;
             let quiz_incorrect_data = check.in_correct;
-            console.log("Quiz Correct Data : ", quiz_correct_data)
-            console.log("Quiz Incorrect Data : ", quiz_incorrect_data)
+            // console.log("Quiz Correct Data : ", quiz_correct_data)
+            // console.log("Quiz Incorrect Data : ", quiz_incorrect_data)
 
             //quiz_percentage
             // console.log("Quiz Percentage: ", quiz_percentage)
             
+
+            //Test Section
+
+            const quiz_check = await test.findOne({ pin: pinForResult}).exec();
+            // console.log(quiz_check)
+
             //CV section
             let cv_score;
             const user = await Users.findOne({email: emailForResult}).exec();
@@ -1987,12 +1993,13 @@ const userCtrl = {
                 interviewer_name, candidate_name,
                 candidate_user: mongoose.Types.ObjectId(candidate_user?._id), 
                 interviewer_user: mongoose.Types.ObjectId(interviewer_user?._id),
+                quiz: quiz_check,
                 meeting: meeting_id,
                 emotions_percentage, quiz_percentage, cv_percentage, overall_score,
                 chartData, chartData_2,
                 quiz_correct_data, quiz_incorrect_data
             }) 
-
+            
             await report.save(); 
             res.json({msg: "success"});
 
