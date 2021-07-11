@@ -89,18 +89,25 @@ export default function Report_Page({user}) {
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false);
-
-
+    const [questions, setQuestions] = useState(0);
+    const [correctLength, setCorrectLength] = useState(0);
+    const [incorrectLength, setIncorrectLength] = useState(0)
     const [report, setReport] = useState([]);
   
     const callApi = async ()=>{     
         setLoading(true);
+        var correctLengthVar;
+        var incorrectLengthVar;
         await axios.post("/user/get-report-by-meetingId",{meetingId: id}).then((res)=>{
             setReport(res.data);
-            console.log("Report : ",res.data)
+            correctLengthVar = Object.keys(res.data.quiz_correct_data).length;
+            incorrectLengthVar = Object.keys(res.data.quiz_incorrect_data).length;
+            setCorrectLength(correctLengthVar)
+            setIncorrectLength(incorrectLengthVar)
+            setQuestions(correctLength + incorrectLength)
             setLoading(false);
         }).catch((err) => {
-           if(err.response.data.msg === false){
+           if(err?.response.data.msg === false){
                if (user?.role === 0 ){
                     history.push('/meetings/see-meetings-schedule-for-candidate')
                     alert("Result is not announced yet")
@@ -277,19 +284,37 @@ export default function Report_Page({user}) {
                                             <PermIdentityOutlinedIcon />
                                             <h2 className= "company__heading_section_text"> Quiz Information Information </h2>
                                         </div>
-                                </div>            
+                                </div>
+
+                                
+                                <div className="user__information__main">
+                                    <div className="user__information__left">
+                                        <div className="user__information__left__section">
+                                            <h4> <b> No. of Questions   </b>  </h4>
+                                            <h4> {questions}</h4>
+                                        </div>
+                                        <div className="user__information__left__section">
+                                            <h4> <b> Incorrect Answers   </b>  </h4>
+                                            <h4> {incorrectLength}</h4>
+                                        </div>
+                                    </div>
+                                    <div className="user__information__right">
+                                        <div className="user__information__right__section">
+                                            <h4> <b> Correct Answers   </b>  </h4>
+                                            <h4> {correctLength}</h4>
+                                        </div>
+                                    </div>   
+                                </div>  
                                 {/* Start of Quiz Section */}
                                 { report?.quiz_correct_data?.length > 0 && (
-                                        <>
-                                            
-                                        
+                                        <>                        
                                             {       
                                                 report?.quiz_correct_data?.map((quiz,index) =>{
                                                     return(
                                                         <div className="company__list__section">
 
                                                             <div className="company__list__heading__section__for__profile__page">
-                                                                <h3 className= "user__section__heading"> <b> Question : {index + 1} </b></h3>
+                                                                <h3 className= "user__section__heading"> <b> Correct Question : {index + 1} </b></h3>
                                                             </div>
 
                                                             <div className="company__information__main">        
@@ -321,7 +346,7 @@ export default function Report_Page({user}) {
                                                         <div className="company__list__section">
 
                                                             <div className="company__list__heading__section__for__profile__page">
-                                                                <h3 className= "user__section__heading"> <b> Question : {index + 1} </b></h3>
+                                                                <h3 className= "user__section__heading"> <b> Incorrect Question : {index + 1} </b></h3>
                                                             </div>
 
                                                             <div className="company__information__main">        
@@ -358,8 +383,6 @@ export default function Report_Page({user}) {
 
                                 <div className="user__information__main">
                                     <div className="user__information__left">
-                                        
-    
                                         <div className="user__information__left__section">
                                             <h4> <b> Interviewer   </b>  </h4>
                                             <h4> {report?.interviewer_user?.name}</h4>
@@ -410,8 +433,8 @@ export default function Report_Page({user}) {
                                             <h4> {report?.candidate?.job_preference?.previous_jobs_salary}$ </h4>                                                        
                                         </div>
                                         
-                                        </div>
-                                    </div>   
+                                    </div>
+                                </div>   
                                 
                                 
                                 <div className="company__information__main">        
