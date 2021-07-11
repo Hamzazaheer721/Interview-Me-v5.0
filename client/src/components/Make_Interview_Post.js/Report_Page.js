@@ -271,45 +271,79 @@ export default function Report_Page({user}) {
                             </div> {/* closing div of list section */} 
 
                                         
-
-
-                            {{/* Start of Quiz Section */}}
-                            { report?.quiz_correct_data?.length > 0 && (
-                                    <div className="company__section">
-                                        <div className="heading__section">
+                            <div className="company__section">
+                                <div className="company__section__titlebar">
+                                        <div className="company__heading__section">
                                             <PermIdentityOutlinedIcon />
-                                            <h2 className= "user__section__heading"> Quiz Result Section </h2>
+                                            <h2 className= "company__heading_section_text"> Quiz Information Information </h2>
                                         </div>
-                                    
-                                        {       
-                                            report?.quiz_correct_data?.map((quiz,index) =>{
-                                                return(
-                                                    <div className="company__list__section">
-
-                                                        <div className="company__list__heading__section__for__profile__page">
-                                                            <h3 className= "user__section__heading"> <b> Question : {index + 1} </b></h3>
-                                                        </div>
-
-                                                        <div className="company__information__main">        
-                                                            <h4> <b> Question   </b>  </h4>
-                                                            <h4> {quiz?.question} </h4>
-                                                            <h4> <b> Correct Answer   </b>  </h4>
-                                                            <h4> {quiz?.correct_answer} </h4>
-                                                            <h4> <b> Selected Answer   </b>  </h4>
-                                                            <h4> {quiz?.selected_answer} </h4>
-                                                        </div>
-                    
-                                                </div>
-                                            )})
-                                        }
+                                </div>            
+                                {/* Start of Quiz Section */}
+                                { report?.quiz_correct_data?.length > 0 && (
+                                        <>
+                                            
                                         
-                                    </div> 
-                           
-                                )
+                                            {       
+                                                report?.quiz_correct_data?.map((quiz,index) =>{
+                                                    return(
+                                                        <div className="company__list__section">
 
-                            }
+                                                            <div className="company__list__heading__section__for__profile__page">
+                                                                <h3 className= "user__section__heading"> <b> Question : {index + 1} </b></h3>
+                                                            </div>
 
-                            {{/* Start of Company Section */}}
+                                                            <div className="company__information__main">        
+                                                                <h4> <b> Question   </b>  </h4>
+                                                                <h4> {quiz?.question} </h4>
+                                                                <h4> <b> Correct Answer   </b>  </h4>
+                                                                <h4> {quiz?.correct_answer} </h4>
+                                                                <h4> <b> Selected Answer   </b>  </h4>
+                                                                <h4> {quiz?.selected_answer} </h4>
+                                                            </div>
+                        
+                                                    </div>
+                                                )})
+                                            }
+                                            
+                                        </>
+                            
+                                    )
+
+                                }
+
+
+                                { report?.quiz_incorrect_data?.length > 0 && (
+                                        <>
+                                        
+                                            {       
+                                                report?.quiz_incorrect_data?.map((quiz,index) =>{
+                                                    return(
+                                                        <div className="company__list__section">
+
+                                                            <div className="company__list__heading__section__for__profile__page">
+                                                                <h3 className= "user__section__heading"> <b> Question : {index + 1} </b></h3>
+                                                            </div>
+
+                                                            <div className="company__information__main">        
+                                                                <h4> <b> Question   </b>  </h4>
+                                                                <h4> {quiz?.question} </h4>
+                                                                <h4> <b> Correct Answer   </b>  </h4>
+                                                                <h4> {quiz?.correct_answer} </h4>
+                                                                <h4> <b> Selected Answer   </b>  </h4>
+                                                                <h4> {quiz?.selected_answer} </h4>
+                                                            </div>
+                                                    </div>
+                                                )})
+                                            }
+                                            
+                                       </>
+                            
+                                    )
+
+                                }
+                            </div>
+
+                            {/* Start of Company Section */}
                             <div className="company__section">
 
                                 <div className="company__section__titlebar">
