@@ -402,7 +402,7 @@ export default function Report_Page({user}) {
                                     </div>
                                     <div className="user__information__right">
                                         <div className="user__information__right__section">
-                                            <h4> <b> candidate   </b>  </h4>
+                                            <h4> <b> Candidate   </b>  </h4>
                                             <h4> {report?.candidate_user?.name}</h4>
                                         </div>
         
