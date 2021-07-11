@@ -20,6 +20,16 @@ const resultSchema = new Schema({
     type: String,
     required: true,
   },
+  correct : [{
+    correct_answer : String,
+    selected_answer : String,
+    question: String,
+  }],
+  in_correct: [{
+    correct_answer : String,
+    selected_answer : String,
+    question: String,
+  }]
 });
 
 const result = mongoose.model("Result", resultSchema);

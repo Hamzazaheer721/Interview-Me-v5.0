@@ -17,7 +17,7 @@ function Question(props) {
   const [options, setoptions] = useState([]);
   const [question, setquestion] = useState("");
   const [answers, setanswers] = useState({});
-
+  const [quizData, setQuizData] = useState([])
   useEffect(()=>{},[props.user, props.role])
 
   let name = props.user?.name;
@@ -62,6 +62,8 @@ function Question(props) {
           pin,
           email,
           name,
+          quizData,
+          objlength : length,
           score,
         }
       )
@@ -113,6 +115,9 @@ function Question(props) {
     shuffleArray(options);
   }, [ques]);
 
+  useEffect(()=>{
+    console.log("Quiz Data",quizData)
+  },[quizData])
   const entities = {
     "&#039;": "'",
     "&quot;": '"',
@@ -131,26 +136,42 @@ function Question(props) {
   };
 
   const changeclass = (e) => {
-   
-
     const domele = e.nativeEvent.path;
     domele.reverse();
     let ans = "";
     for (let ele of domele) {
       if (ele.id === "options") {
         for (let ans of ele.childNodes) {
-          console.log("answer is", ans)
+          // console.log("answer is", ans)
           // ans.className = styles.container;
         }
       } else if (ele.localName === "div" && ele.id === "") {
         // ele.className = styles.containeractive;
-        console.log("answer in if else", ans)
+        // console.log("answer in if else", ans)
         ans = ele.childNodes[0].value;
       }
     }
-    console.log("answer after loops", ans)
     setanswers({ ...answers, [ques]: ans });
-    console.log("Answers array is ",answers)
+    let question = res.results[ques].question.replace(
+      /&#?\w+;/g,
+      (match) => entities[match]
+    );
+    let answer = res.results[ques].correct_answer.replace(
+      /&#?\w+;/g,
+      (match) => entities[match]
+    );
+    const dataToMutate = { 
+      question : question, 
+      correct_answer : answer,
+      selected_answer: ans
+    }
+    setQuizData ({...quizData, ["obj_" + ques] :dataToMutate})
+
+    // setQuizData(...quizData , dataToMutate)
+    // console.log("answer after loops", ans)
+    // console.log("Question : ", res.results[ques].question)
+    // console.log("Correct Anaswer : ", res.results[ques].correct_answer)
+    // console.log("Answers array is ",answers)
   };
 const choices = options.map((option, index) => (
   <div className="options__container">

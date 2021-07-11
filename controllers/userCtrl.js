@@ -830,22 +830,28 @@ const userCtrl = {
             .send({ message: "Couldn't fetch test details. Try again!" });
     },
     submittest: async (req, res) =>{
+        console.log("Submit Test");
         const score = parseInt(req.body.score);
         const email = req.body.email;
         const name = req.body.name;
         const pin = req.body.pin;
-      
-        const resultEntry = new result({ email, name, pin, score });
-        console.log(resultEntry)
-        resultEntry
-          .save()
-          .then(() => {
-              console.log("yo result has been added")
-              res.send("result added!")
+        const quizData = req.body.quizData;
+        const correct = [];
+        const in_correct = [];
+        for(var key in quizData){
+            if (quizData.hasOwnProperty(key)) {
+                quizData[key].correct_answer.trim() === quizData[key].selected_answer.trim() ? correct.push(quizData[key]) : in_correct.push(quizData[key])
+            }
+        } 
+        const resultEntry = new result({ email, name, pin, score, correct, in_correct});
+        await resultEntry
+            .save()
+            .then(()=> {
+                res.send("Result has been added")
             })
-          .catch((err) => {
-              console.log("error arose:", err)
-              res.status(400).json("error : " + err)});       
+            .catch((err)=>{
+                res.status(400).json("error : ", + error);
+            });       
     },
     deletetest: async (req, res) => {
         try {
@@ -1894,11 +1900,10 @@ const userCtrl = {
                 else{
                     quiz_percentage = parseInt(check?.score);
                 }
-            
+ 
             //quiz_percentage
             console.log("Quiz Percentage: ", quiz_percentage)
-
-
+            
             //CV section
             let cv_score;
             const user = await Users.findOne({email: emailForResult}).exec();
