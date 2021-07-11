@@ -565,7 +565,7 @@ const userCtrl = {
             const toEmail = candidate_user?.email;
             const toName = candidate_user?.name;
             const sentByName = interviewer?.user?.name;
-            const button_url = `http://localhost:3000/meetings/join-room/${meetingId}`           
+            const button_url = `${CLIENT_URL}meetings/join-room/${meetingId}`           
             const message = `Please join the meeting by pressing on following buttton. Enter Test id: ${testid} to attempt test`
             await sendEmailToCandidate(toEmail, toName, sentByName, button_url, message);
 
@@ -646,7 +646,7 @@ const userCtrl = {
             const toEmail = candidate_user?.email;
             const toName = candidate_user?.name;
             const sentByName = interviewer?.user?.name;
-            const button_url = `http://localhost:3000/meetings/join-room/${meetingId}`           
+            const button_url = `${CLIENT_URL}/meetings/join-room/${meetingId}`          
             const message = "Please join the meeting with following Id"
 
             await sendEmailToCandidate(toEmail, toName, sentByName, button_url, message);
@@ -1204,7 +1204,7 @@ const userCtrl = {
             const toEmail = interviewer.email;
             const toName = interviewer.name;
             const sentByName = candidate.name;
-            const button_url = `http://localhost:3000/user/open-candidate-profile-page/${candidate_profile._id}`
+            const button_url = `${CLIENT_URL}/user/open-candidate-profile-page/${candidate_profile._id}`
             
             console.log(button_url) 
             
@@ -1238,7 +1238,7 @@ const userCtrl = {
             const toEmail = candidate.email;
             const toName = candidate.name;
             const sentByName = interviewer.name;
-            const button_url = `http://localhost:3000/user/open-interviewer-profile-page/${interviewer_profile._id}`
+            const button_url = `${CLIENT_URL}/user/open-interviewer-profile-page/${interviewer_profile._id}`
             
             console.log(button_url) 
             
