@@ -100,7 +100,6 @@ export default function Report_Page({user}) {
         var incorrectLengthVar;
         await axios.post("/user/get-report-by-meetingId",{meetingId: id}).then((res)=>{
             setReport(res.data);
-            console.log("Report : ", res.data)
             correctLengthVar = Object.keys(res.data.quiz_correct_data).length;
             incorrectLengthVar = Object.keys(res.data.quiz_incorrect_data).length;
             setCorrectLength(correctLengthVar)
@@ -118,9 +117,7 @@ export default function Report_Page({user}) {
                    alert("Result couldn't be saved due to network error")
                }
            }
-        });
-
-        
+        });  
     }
     useEffect(()=>{
         console.log("This Use Effect is being called")
@@ -205,7 +202,6 @@ export default function Report_Page({user}) {
                   <Loading />  
                 </>
             ): (
-
                 <>
                     <div>
                         <img className = "interview__home__image" src="https://res.cloudinary.com/xapper72/image/upload/v1620095929/avatar/amazon_qrzh6x.png" alt=""/>
@@ -222,9 +218,6 @@ export default function Report_Page({user}) {
                         
                         </div>
                         <div className="right__container">
-                           
-
-
                             <div className="graph__list__section">
                                 <div className="company__title__section">
                                     <div className="company__list__heading__section">
@@ -247,9 +240,7 @@ export default function Report_Page({user}) {
                                         rootProps={{ 'data-testid': '1' }}
                                     />
                                 </div>
-
-                            </div>
-                            
+                            </div>      
                             <div className="bar__graph__list__section">
                                 <div className="company__title__section">
                                     <div className="company__list__heading__section">
@@ -275,19 +266,14 @@ export default function Report_Page({user}) {
                                         rootProps={{ 'data-testid': '2' }}
                                     />
                                 </div>
-
-                            </div> {/* closing div of list section */} 
-
-                                        
+                            </div> {/* closing div of list section */}                    
                             <div className="company__section">
                                 <div className="company__section__titlebar">
                                         <div className="company__heading__section">
                                             <PermIdentityOutlinedIcon />
                                             <h2 className= "company__heading_section_text"> Quiz Information Information </h2>
                                         </div>
-                                </div>
-
-                                
+                                </div>           
                                 <div className="user__information__main">
                                     <div className="user__information__left">
                                         <div className="user__information__left__section">
@@ -358,8 +344,6 @@ export default function Report_Page({user}) {
                                     )
 
                                 }
-
-
                                 { report?.quiz_incorrect_data?.length > 0 && (
                                         <>
                                         
@@ -390,7 +374,6 @@ export default function Report_Page({user}) {
 
                                 }
                             </div>
-
                             {/* Start of Company Section */}
                             <div className="company__section">
 
@@ -399,11 +382,7 @@ export default function Report_Page({user}) {
                                         <PermIdentityOutlinedIcon />
                                         <h2 className= "company__heading_section_text"> Report Information </h2>
                                     </div>
-
-
-                                </div>
-                                            
-
+                                </div>                              
                                 <div className="user__information__main">
                                     <div className="user__information__left">
                                         <div className="user__information__left__section">
@@ -426,11 +405,8 @@ export default function Report_Page({user}) {
                                         <div className="user__information__left__section">
                                             <h4> <b> Cand. desired salary   </b>  </h4>
                                             <h4> {report?.candidate?.expected_salary}$</h4>
-                                        </div>
-
-                
+                                        </div>               
                                     </div>
-
                                     <div className="user__information__right">
                                         <div className="user__information__right__section">
                                             <h4> <b> candidate   </b>  </h4>
@@ -454,12 +430,9 @@ export default function Report_Page({user}) {
                                         <div className="user__information__right__section">
                                             <h4> <b> Cand. Previous Job Salary   </b>  </h4>
                                             <h4> {report?.candidate?.job_preference?.previous_jobs_salary}$ </h4>                                                        
-                                        </div>
-                                        
+                                        </div>                            
                                     </div>
-                                </div>   
-                                
-                                
+                                </div>                      
                                 <div className="company__information__main">        
                                     <h4> <b> Emotion Score  </b>  </h4>
                                     <h4> {report?.emotions_percentage}% </h4>
@@ -495,77 +468,66 @@ export default function Report_Page({user}) {
                                         </>
                                     )}
                                 </div>
-
-                            </div>
-                           
+                            </div>                          
                             {(user?.role === 1 && report?.hired === "") && (
                                 <div >
                                     <Container component="main" maxWidth="md" >
                                     <CssBaseline />
                                     <div className={classes.paper}>
                                         <Avatar className={classes.avatar}>
-                                        <CreateIcon />
+                                            <CreateIcon />
                                         </Avatar>
                                         <Typography component="h1" variant="h5">
-                                        Your Decision
+                                            Your Decision
                                         </Typography>
-                            
                                         {error && !success && showErrorMessage(error)}
                                         {success && !error && showSuccessMessage(success)}
                                         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)} >
-                                        <Grid container spacing={2}>
-                            
-                                            
-                                                    <Grid item xs={12} >
-                                                        <TextField
-                                                            {...register('comments')}
-                                                            variant="outlined"
-                                                            required
-                                                            fullWidth
-                                                            id="comments"
-                                                            label="Comments for Candidate"
-                                                            name="comments"
-                                                            autoComplete="Web Design"
-                                                        />
-                                                    </Grid>
-                            
-                                                    <Grid item xs={12}>
-                                                        <FormControl variant="outlined" className={classes_two.formControl}>
-                                                        <InputLabel id="hired"> Hiring Decision* </InputLabel>
-                                                        <Select
-                                                            labelId="hired"
-                                                            id="demo-simple-select-outlined"
-                                                            value={hired}
-                                                            onChange={handleChangeForHired}
-                                                            label="Hiring Decision*"
-                                                        >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
-                                                            {dropdownHired.map(ind => {
-                                                            return(
-                                                                <MenuItem value={ind.value}>{ind.name}</MenuItem>
-                                                            )
-                                                            })             
-                                                            }
-                                                        </Select>
-                                                        </FormControl>
-                                                    </Grid> 
-                                                    
-                                                    
-                            
+                                            <Grid container spacing={2}>                            
+                                                <Grid item xs={12} >
+                                                    <TextField
+                                                        {...register('comments')}
+                                                        variant="outlined"
+                                                        required
+                                                        fullWidth
+                                                        id="comments"
+                                                        label="Comments for Candidate"
+                                                        name="comments"
+                                                        autoComplete="Web Design"
+                                                    />
                                                 </Grid>
-
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                            className={classes.submit}
-                                        >
-                                            Add
-                                        </Button>
-                                        
+                                                <Grid item xs={12}>
+                                                    <FormControl variant="outlined" className={classes_two.formControl}>
+                                                    <InputLabel id="hired"> Hiring Decision* </InputLabel>
+                                                    <Select
+                                                        labelId="hired"
+                                                        id="demo-simple-select-outlined"
+                                                        value={hired}
+                                                        onChange={handleChangeForHired}
+                                                        label="Hiring Decision*"
+                                                    >
+                                                        <MenuItem value="">
+                                                        <em>None</em>
+                                                        </MenuItem>
+                                                        {dropdownHired.map(ind => {
+                                                        return(
+                                                            <MenuItem value={ind.value}>{ind.name}</MenuItem>
+                                                        )
+                                                        })             
+                                                        }
+                                                    </Select>
+                                                    </FormControl>
+                                                </Grid> 
+                                            </Grid>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                color="primary"
+                                                className={classes.submit}
+                                            >
+                                                Add
+                                            </Button>
                                         </form>
                                     </div>
                                     <Box mt={5}>
@@ -575,19 +537,12 @@ export default function Report_Page({user}) {
                                 </div>
                                 )
                             }
-
-
-
-                        </div> {/* closing div of right container */} 
-
-                         
+                        </div> {/* closing div of right container */}                   
                     </div>
                 </>
             )
         }
-        
         </>
-            
     )
 }
 
