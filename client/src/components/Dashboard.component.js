@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import Test from "./TestElement.component";
 import styles from "../componentsStyles/Dashboard.module.css";
 import axios from "axios";
@@ -70,6 +70,7 @@ function Dashboard({user, isAdmin}) {
   const [time, settime] = useState("");
   const [expiry, setexpiry] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [refreshChild, setRefreshChild] = useState(false);
   const classes = useStyles();
   const options = {
     headers: {
@@ -78,18 +79,16 @@ function Dashboard({user, isAdmin}) {
     },
   };
   
-  useEffect(() => {
+  const getQuiz = async () =>{
     setLoading(true)
-    console.log("Dashboard_test Opened")
     axios
       .post("/user/gettest", {email: user?.email}, options)
       .then((res) => {
-        console.log(res)
         for (let x of res.data) {
           for (let y of topics) {
             if (y["id"] == x["topic"]) x.topicname = y["name"];
           }
-        }
+        }    
         setTests(res.data);
         setLoading(false)
       })
@@ -98,11 +97,12 @@ function Dashboard({user, isAdmin}) {
           // history.push("/");
         } 
         else alert("couldn't fetch please reload");
-      });
-      
-  }, [modalIsOpen]);
+      });     
+  }
 
- 
+  useEffect(() => {
+    getQuiz();
+  }, [modalIsOpen]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -114,15 +114,12 @@ function Dashboard({user, isAdmin}) {
       const res = await axios.post("/user/addtest", {
        email, topic, amount, time, expiry, created: new Date() }
       )
-      console.log("added");
-        
       setmodalIsOpen(false);
-      
+      setRefreshChild(!refreshChild)
     } catch (error) {
       console.log("error : " ,error.response.data.msg);
       alert(error.response.data.msg);
     }
-    
   };
 
   return (
@@ -213,43 +210,9 @@ function Dashboard({user, isAdmin}) {
           </form>
         </Fragment>
       </Modal>
-      <div className={teststyles.parent}>
-        {/* <div className={resultstyles.row}>
-          <div className={teststyles.element}>
-            <strong>Pin</strong>
-          </div>
-          <div className={teststyles.element}>
-            <strong>Topic</strong>
-          </div>
-          <div className={teststyles.element}>
-            <strong>No. of Ques</strong>
-          </div>
-          <div className={teststyles.element}>
-            <strong>Time Duration (Mins)</strong>
-          </div>
-          <div className={teststyles.element}>
-            <strong>Expiry</strong>
-          </div>
-        </div>
-        <div className={styles.testcontainer}>
-          {loading && <Loading/>}
-          {loading === false && tests.map((obj) => (
-            <Test key={obj._id} {...obj} />
-          ))}
-        </div>
-      </div> */}
-      {/* <br />
-      <br />
-      <EnhancedTable testsReceived = {tests} user = {user}/>
-      <br />
-      <br />
-      <EnhancedTable2 testsReceived = {tests} user = {user}/>
-      <br /> */}
-
-      <Admin_Quiz_Table testsReceived = {tests} user = {user} wow ={tests}/>
-   
-      
-    </div>
+      <div className={teststyles.parent} key = {refreshChild}>
+        <Admin_Quiz_Table user = {user}/>
+      </div>
     </React.Fragment>
   );
 }

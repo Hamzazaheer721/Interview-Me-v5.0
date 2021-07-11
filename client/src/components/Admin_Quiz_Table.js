@@ -48,10 +48,6 @@ import modalstyles from "../componentsStyles/Modal.module.css";
 
   return (
     <div>
-
-
-
-
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open form dialog
       </Button>
@@ -83,9 +79,6 @@ import modalstyles from "../componentsStyles/Modal.module.css";
     </div>
   );
 }
-
-
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -243,7 +236,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Admin_Quiz_Table({user, testsReceived}) {
+export default function Admin_Quiz_Table({user}) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('pin');
@@ -263,11 +256,6 @@ export default function Admin_Quiz_Table({user, testsReceived}) {
   const token = useSelector(state => state.token) 
   const [testIdToEdit, setTestIdToEdit] = useState("");
 
-  const LoadingMiniSpinner = () => {
-    return (  
-        <Loader className= {classes.loader} type="TailSpin" color="#00BFFF" height={100} width={100}/>
-    )
-  }
   const handleRequestSort = (event) => {
     const isAsc =  order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -311,9 +299,6 @@ export default function Admin_Quiz_Table({user, testsReceived}) {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, tests?.length - page * rowsPerPage);
-  
-  
-  
 
   const topics = [
     { id: 1, name: "<--select category-->" },
@@ -343,9 +328,6 @@ export default function Admin_Quiz_Table({user, testsReceived}) {
     { id: 32, name: "Entertainment: Cartoon & Animations" },
   ];
   
- 
-  
-
   const options = {
     headers: {
       "Content-Type": "application/json",
@@ -377,23 +359,21 @@ export default function Admin_Quiz_Table({user, testsReceived}) {
   const userToCheck = user._id;
 
   useEffect(() => {
+    console.log("Heyy ")
     getQuiz()
   }, [refresh, modalIsOpen]);
 
-  useEffect(()=>{
-
-  }, [modalIsOpen])
 
   const handleEdit = async (id) => {
     try {
       console.log("handle edit test id: ",id);       
       setTestIdToEdit(id);
-      setmodalIsOpen(true);
-        
+      setmodalIsOpen(true); 
     } catch (err) {
         alert(err.response.data.msg)
     }
   }
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const email = user?.email;
@@ -404,16 +384,14 @@ export default function Admin_Quiz_Table({user, testsReceived}) {
       const res = await axios.patch("/user/edit-test-via-testId", {
        testId: testIdToEdit, email, topic, amount, time, expiry, created: new Date() }
       )
-      console.log("added");
-      setRefresh(!refresh) 
+      setRefresh()
       setmodalIsOpen(false);
-      
     } catch (error) {
       console.log("error : " ,error.response.data.msg);
       alert(error.response.data.msg);
     }
-    
   };
+
   const handleDelete = async (id) => {
     try {       
         if(window.confirm("Are you sure you want to delete this quiz?")){
@@ -423,14 +401,12 @@ export default function Admin_Quiz_Table({user, testsReceived}) {
             })
         }     
         setRefresh(!refresh)   
-        setLoading(false)
     } catch (err) {
         alert(err.response.data.msg)
     }
   }
 
   return (
-
     <>
       <Modal
         isOpen={modalIsOpen}
