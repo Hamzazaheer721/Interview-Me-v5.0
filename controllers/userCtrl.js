@@ -1793,7 +1793,7 @@ const userCtrl = {
     addreport_via_meeting_id: async (req, res) =>{
         try {
             console.log("add-report_via_meeting_id");
-            console.log("The body is ", req.body)
+            // console.log("The body is ", req.body)
             const meetingId = req.body.meetingId;
             const emotionArrayToSend = req.body.emotionArrayToSend;
 
@@ -1810,7 +1810,7 @@ const userCtrl = {
             let emotionsArrayLength = emotionArrayToSend?.length;
             let chartData;
 
-            if(emotionArrayToSend.length >0){  
+            if(emotionArrayToSend.length > 0){  
                 for ( i = 0 ; i< emotionArrayToSend?.length; i++){
                     const ea = emotionArrayToSend[i];
                     console.log("Emotions array at index")
@@ -1854,7 +1854,6 @@ const userCtrl = {
             else{
                 emotions_score = 0;
                 emotions_percentage = 0;
-
                 chartData = [
                     ['Task', 'Hours per Day'],
                     ['Happy', 0],
@@ -1866,12 +1865,10 @@ const userCtrl = {
                 ]
             }
             
-
             //printing chartData, score and percentage of emotions
-            console.log(chartData);
-            console.log(emotions_score);
-            console.log(emotions_percentage);
-
+            // console.log(chartData);
+            // console.log(emotions_score);
+            // console.log(emotions_percentage);
 
             //Quiz Score Section
             let quiz_percentage;
@@ -1882,8 +1879,8 @@ const userCtrl = {
 
             let interviewer_id = mongoose.Types.ObjectId(meeting?.madeBy?._id);
             let meeting_id = mongoose.Types.ObjectId(meeting?._id);
-            console.log("meeting_id :", meeting_id);
-            console.log("interviewer_id :", interviewer_id);
+            // console.log("meeting_id :", meeting_id);
+            // console.log("interviewer_id :", interviewer_id);
             let interviewer_name;
             const interviewer = await Interviewer.findOne({_id: mongoose.Types.ObjectId(interviewer_id)}).populate('user posts companies').exec();
             if (!interviewer){
@@ -1900,9 +1897,13 @@ const userCtrl = {
                 else{
                     quiz_percentage = parseInt(check?.score);
                 }
- 
+            let quiz_correct_data = check.correct;
+            let quiz_incorrect_data = check.in_correct;
+            console.log("Quiz Correct Data : ", quiz_correct_data)
+            console.log("Quiz Incorrect Data : ", quiz_incorrect_data)
+
             //quiz_percentage
-            console.log("Quiz Percentage: ", quiz_percentage)
+            // console.log("Quiz Percentage: ", quiz_percentage)
             
             //CV section
             let cv_score;
@@ -1915,12 +1916,10 @@ const userCtrl = {
                 if (!candidate){
                     cv_score = 0;
                 }            
-            //str = str.replace(/\s+/g, '');
             let candidate_user = candidate?.user;
             let candidate_name = candidate?.user?.name;
             let qualification = candidate?.education?.qualification.replace(/\s+/g, '')
             qualification = qualification.toLowerCase();
-            console.log(qualification)
             if (qualification ===  "phd/doctrate"){
                 cv_score = 100;
             }
@@ -1951,7 +1950,7 @@ const userCtrl = {
             
             //cv_percentage
             const cv_percentage = cv_score;
-            console.log(cv_percentage)
+            // console.log(cv_percentage)
             
             //overall_score
             let overall_score1 = +(emotions_percentage) + (+quiz_percentage) + (+cv_percentage);
@@ -1959,18 +1958,17 @@ const userCtrl = {
             let overall_score3 = overall_score2 * 100;
             const overall_score = overall_score3;
 
-
-            console.log("emotions_percentage :", emotions_percentage);
-            console.log("quiz_percentage: ", quiz_percentage);
-            console.log("cv_percentage :", cv_percentage)
-            console.log("overall_score: ", overall_score);
-            console.log("candidate_name :", candidate_name )
-            console.log("interviewer_name :", interviewer_name )
-            console.log("interviewer_user :", interviewer_user )
-            console.log("candidate_user :", candidate_user )
-            console.log("interviewer :", interviewer )
-            console.log("candidate :", candidate )
-            console.log("meeting  :", meeting_id )
+            // console.log("emotions_percentage :", emotions_percentage);
+            // console.log("quiz_percentage: ", quiz_percentage);
+            // console.log("cv_percentage :", cv_percentage)
+            // console.log("overall_score: ", overall_score);
+            // console.log("candidate_name :", candidate_name )
+            // console.log("interviewer_name :", interviewer_name )
+            // console.log("interviewer_user :", interviewer_user )
+            // console.log("candidate_user :", candidate_user )
+            // console.log("interviewer :", interviewer )
+            // console.log("candidate :", candidate )
+            // console.log("meeting  :", meeting_id )
 
             let chartData_2 = [
                 ['', 'Quiz', 'Emotions', 'CV'],
@@ -1981,7 +1979,7 @@ const userCtrl = {
                 ended: 1
             }).populate('madeBy');
                 if(!meeting) res.status(400).json({msg: "Meeting not Found"});
-            console.log(meeting.ended)
+            // console.log(meeting.ended)
 
             const report = new Report ({
                 interviewer : mongoose.Types.ObjectId(interviewer?._id),
@@ -1991,13 +1989,13 @@ const userCtrl = {
                 interviewer_user: mongoose.Types.ObjectId(interviewer_user?._id),
                 meeting: meeting_id,
                 emotions_percentage, quiz_percentage, cv_percentage, overall_score,
-                chartData, chartData_2
+                chartData, chartData_2,
+                quiz_correct_data, quiz_incorrect_data
             }) 
 
             await report.save(); 
             res.json({msg: "success"});
 
-            
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

@@ -40,8 +40,8 @@ const reportSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-
-
+    quiz_correct_data : [],
+    quiz_incorrect_data: []
 }, {
     timestamps: true 
 })

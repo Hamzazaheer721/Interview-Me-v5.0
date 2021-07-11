@@ -15,11 +15,9 @@ router.get('/infor', auth, userCtrl.getUserInfor)
 router.get('/all_infor',cors.corsWithOptions,  userCtrl.getUsersAllInfor)
 router.get('/logout', userCtrl.logout)
 router.patch('/update', auth, userCtrl.updateUser)
-
 router.patch('/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)
 router.delete('/delete/:id', auth, authAdmin, userCtrl.deleteUser)
 router.patch('/changeRole/:id', userCtrl.changeRole)
-
 
 // Social Login
 router.post('/google_login', userCtrl.googleLogin)
@@ -37,12 +35,9 @@ router.patch('/edit-test-via-testId', userCtrl.edittest_via_testId)
 
 //Interviewer
 router.post('/addinterviewer',userCtrl.addinterviewer)
-
 router.post('/get-interviewer-by-userId',userCtrl.getinterviewer_via_userId)
 router.get('/getinterviewers',userCtrl.getinterviewers)
 router.delete('/deleteinterviewer',userCtrl.deleteinterviewer)
-
-
 
 //candidate
 router.post('/get-candidate-by-userId',userCtrl.getcandidate_via_userId)
@@ -71,13 +66,10 @@ router.patch('/update-company-by-companyId',  userCtrl.updatecompany_via_company
 router.delete('/delete-company/:id',  userCtrl.deletecompany_via_company_id)
 router.post('/add-company-by-userId',  userCtrl.addcompany_via_user_id)
 
-
 //project
 router.patch('/update-project-by-projectId',  userCtrl.updateproject_via_project_id)
 router.delete('/delete-project/:id',  userCtrl.deleteproject_via_project_id)
 router.post('/add-project-by-userId',  userCtrl.addproject_via_user_id)
-
-
 
 //sending Emails
 router.post('/send-email-to-interviewer',userCtrl.send_email_to_interviewer)
@@ -103,7 +95,6 @@ router.post('/update-report-by-meetingId', userCtrl.updatereport_via_meeting_id)
 
 //short-list candidates
 router.get ('/get-shortlist-candidate', userCtrl.shortListCandidate)
-
 
 // For checking
 router.get('/preview', function(req, res){
