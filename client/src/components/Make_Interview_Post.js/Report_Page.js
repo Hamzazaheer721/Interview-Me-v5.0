@@ -105,7 +105,7 @@ export default function Report_Page({user}) {
             incorrectLengthVar = Object.keys(res.data.quiz_incorrect_data).length;
             setCorrectLength(correctLengthVar)
             setIncorrectLength(incorrectLengthVar)
-            setQuestions(correctLength + incorrectLength)
+            setQuestions(correctLengthVar + incorrectLengthVar)
             setLoading(false);
         }).catch((err) => {
            if(err?.response.data.msg === false){
@@ -498,10 +498,6 @@ export default function Report_Page({user}) {
 
                             </div>
                            
-                                             
-                            
-
-
                             {(user?.role === 1 && report?.hired === "") && (
                                 <div >
                                     <Container component="main" maxWidth="md" >
