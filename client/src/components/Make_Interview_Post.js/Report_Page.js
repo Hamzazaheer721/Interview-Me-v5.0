@@ -306,10 +306,7 @@ export default function Report_Page({user}) {
                                             <h4> <b> Time Duration:   </b>  </h4>
                                             <h4> {report?.quiz?.time} mins</h4>
                                         </div>
-                                        <div className="user__information__left__section">
-                                            <h4> <b> Quiz Pin:  </b>  </h4>
-                                            <h4> {report?.quiz?.pin}</h4>
-                                        </div>   
+                                       
                                     </div>
                                     <div className="user__information__right">
                                         <div className="user__information__right__section">
@@ -321,10 +318,13 @@ export default function Report_Page({user}) {
                                             <h4> <b> Created:  </b>  </h4>
                                             <h4> {moment(report?.quiz?.created, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}</h4>
                                         </div>
-
                                         <div className="user__information__right__section">
                                             <h4> <b> Expiry:  </b>  </h4>
                                             <h4> {moment(report?.quiz?.expiry, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}</h4>
+                                        </div>
+                                        <div className="user__information__right__section">
+                                            <h4> <b> Quiz Pin:  </b>  </h4>
+                                            <h4> {report?.quiz?.pin}</h4>
                                         </div>
                                     </div>   
                                 </div>  
