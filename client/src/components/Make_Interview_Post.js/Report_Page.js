@@ -291,11 +291,11 @@ export default function Report_Page({user}) {
                                 <div className="user__information__main">
                                     <div className="user__information__left">
                                         <div className="user__information__left__section">
-                                            <h4> <b> No. of Questions   </b>  </h4>
+                                            <h4> <b> No. of Questions:   </b>  </h4>
                                             <h4> {questions}</h4>
                                         </div>
                                         <div className="user__information__left__section">
-                                            <h4> <b> Incorrect Answers   </b>  </h4>
+                                            <h4> <b> Incorrect Answers:   </b>  </h4>
                                             <h4> {incorrectLength}</h4>
                                         </div>
                                         <div className="user__information__left__section">
@@ -303,31 +303,29 @@ export default function Report_Page({user}) {
                                             <h4> {report?.quiz?.email}</h4>
                                         </div>
                                         <div className="user__information__left__section">
-                                            <h4> <b> Time Duration   </b>  </h4>
+                                            <h4> <b> Time Duration:   </b>  </h4>
                                             <h4> {report?.quiz?.time} mins</h4>
                                         </div>
                                         <div className="user__information__left__section">
-                                            <h4> <b> Quiz Pin   </b>  </h4>
-                                            <h4> {report?.quiz?.pin} mins</h4>
+                                            <h4> <b> Quiz Pin:  </b>  </h4>
+                                            <h4> {report?.quiz?.pin}</h4>
                                         </div>   
                                     </div>
                                     <div className="user__information__right">
                                         <div className="user__information__right__section">
-                                            <h4> <b> Correct Answers   </b>  </h4>
+                                            <h4> <b> Correct Answers:   </b>  </h4>
                                             <h4> {correctLength}</h4>
                                         </div>
 
                                         <div className="user__information__right__section">
-                                            <h4> <b> Created  </b>  </h4>
-                                            <h4> {moment(report?.quiz?.createdAt, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}}</h4>
+                                            <h4> <b> Created:  </b>  </h4>
+                                            <h4> {moment(report?.quiz?.created, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}</h4>
                                         </div>
 
                                         <div className="user__information__right__section">
-                                            <h4> <b> Expiry  </b>  </h4>
-                                            <h4> {moment(report?.quiz?.expiry?.createdAt, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}}</h4>
+                                            <h4> <b> Expiry:  </b>  </h4>
+                                            <h4> {moment(report?.quiz?.expiry, 'YYYY-MM-DD hh:mm:ss').format('MM-DD-YYYY')}</h4>
                                         </div>
-
-                                        
                                     </div>   
                                 </div>  
                                 {/* Start of Quiz Section */}
