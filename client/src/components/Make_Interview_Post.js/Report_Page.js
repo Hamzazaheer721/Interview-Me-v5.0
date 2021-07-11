@@ -451,7 +451,7 @@ export default function Report_Page({user}) {
                                             {report?.hired === "" && <h4> Decision Pending </h4>}
                                             {report?.hired === "hire" && <h4> Congrtaulations! You're Hired by Interviewer </h4>}
                                             {report?.hired === "reject" && <h4> Unfortunately, You've been rejected by Interviewer </h4>}
-                                            <h4> <b> Interviewer's Interviewer's Comments  </b>  </h4>
+                                            <h4> <b> Interviewer's Comments  </b>  </h4>
                                             {report?.comments === "" && <h4> N/A </h4>}
                                             {report?.comments !== "" && <h4> {report?.comments} </h4>}
                                         </>
