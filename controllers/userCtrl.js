@@ -565,7 +565,7 @@ const userCtrl = {
             const toEmail = candidate_user?.email;
             const toName = candidate_user?.name;
             const sentByName = interviewer?.user?.name;
-            const button_url = `${CLIENT_URL}meetings/join-room/${meetingId}`           
+            const button_url = `${CLIENT_URL}/meetings/join-room/${meetingId}`           
             const message = `Please join the meeting by pressing on following buttton. Enter Test id: ${testid} to attempt test`
             await sendEmailToCandidate(toEmail, toName, sentByName, button_url, message);
 
