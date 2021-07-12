@@ -344,7 +344,7 @@ export default function Applied_Candidates_Table({user}) {
         </>
       ):(
         <>
-          <h1> No Candidate has applied yet for this candidate </h1>
+          <h1> No Candidate has applied yet for this post </h1>
         </>
       )
     }
